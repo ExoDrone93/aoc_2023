@@ -1,7 +1,7 @@
 import { readInstructions } from "../utils/readFile";
 import { sum } from "../utils/sum";
 
-const inputArray = readInstructions('input.txt');
+const inputArray = readInstructions('day1/input.txt');
 
 const writtenNumbers: { [key: string]: string } = {
     'one': '1',
@@ -20,7 +20,7 @@ const pattern = /(?:one|two|three|four|five|six|seven|eight|nine)/gi;
 const convertTextToNumber = (array: string[]): string[] => {
     let convertedInputArray = [];
 
-    inputArray.map((inputString: string) => {
+    array.map((inputString: string) => {
         let textMod: string = inputString;
     
         while (textMod.match(pattern) != null) {
