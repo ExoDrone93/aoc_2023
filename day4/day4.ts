@@ -7,11 +7,13 @@ class Card {
   myNumbers: number[];
   matches: number[];
   point: number;
+  count: number;
 
   constructor(id: string, winningNumbers: number[], myNumbers: number[]) {
     this.id = Number(id);
     this.winningNumbers = winningNumbers;
     this.myNumbers = myNumbers;
+    this.count = 1;
   }
 
   setMatches() {
@@ -20,6 +22,9 @@ class Card {
 
   setPoint() {
     this.point = this.matches.length ? 2 ** (this.matches.length - 1) : 0;
+  }
+  bumpCount(bumpBy: number) {
+    this.count += bumpBy;
   }
 }
 
@@ -46,13 +51,11 @@ console.log('The part1 answer is:', sum(cardPoints));
 
 //PART2--------------------------------------------------------------------------------
 for (const card of cards) {
-  const index = cards.indexOf(card);
-  if (index !== -1) {
-    const endIndex = index + card.matches.length + 1;
-    const filteredElements = cards.slice(index + 1, endIndex);
-    cards.push(...filteredElements);
-  };
+  const startIndex = cards.indexOf(card);
+  const endIndex = startIndex + card.matches.length;
+  for (let i = startIndex + 1; i <= endIndex; i++) {
+    cards[i].bumpCount(card.count)
+  }
 };
 
-console.log('The part2 answer is:', cards.length);
-
+console.log('The part2 answer is:', sum(cards.map(c => c.count)));
